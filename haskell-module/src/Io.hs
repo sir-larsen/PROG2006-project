@@ -22,7 +22,7 @@ subscriber = do
             liftIO $ hFlush stdout
 -}
 
-subscriber :: IO ()
+{-|subscriber :: IO ()
 subscriber = do
     runZMQ $ do
         sub <- socket Sub
@@ -31,3 +31,13 @@ subscriber = do
         forever $ do
             receive sub >>= liftIO . CS.putStrLn
             liftIO $ hFlush stdout
+-}
+
+getMove :: IO String
+getMove = runZMQ $ do
+    sub <- socket Sub
+    subscribe sub ""
+    connect sub "tcp://127.0.0.1:5555"
+    let mv = receive sub
+    let mv2 = CS.unpack <$> mv
+    mv2

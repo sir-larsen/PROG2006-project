@@ -13,7 +13,7 @@ fn main() {
         stdin.read_line(&mut line).unwrap();
 
         // Say what topic I want to publish on
-        publisher.send("TOPIC", zmq::SNDMORE).unwrap();
+        //publisher.send("TOPIC", zmq::SNDMORE).unwrap();
         // Publish the actual message
         publisher.send(&line, 0).unwrap();
     }
