@@ -1,6 +1,6 @@
 module Main where
 
-import Lib
+import Io
 
 main :: IO ()
-main = someFunc
+main = subscriber

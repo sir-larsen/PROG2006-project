@@ -1,10 +1,10 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.33.0.
+-- This file has been generated from package.yaml by hpack version 0.34.4.
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 6bd5fc0f6383b0fcdcf3efe1c28b21968324c42f6a014ea967073032a660e272
+-- hash: 13952b942d112c5367f5d49d585b89a54f93cf2de3b16aaa18a95427b2ef1f3e
 
 name:           haskell-module
 version:        0.1.0.0
@@ -27,13 +27,17 @@ source-repository head
 
 library
   exposed-modules:
-      Lib
+      Io
+      Game
+      Board
   other-modules:
       Paths_haskell_module
   hs-source-dirs:
       src
   build-depends:
       base >=4.7 && <5
+    , bytestring
+    , zeromq4-haskell
   default-language: Haskell2010
 
 executable haskell-module-exe
@@ -45,7 +49,9 @@ executable haskell-module-exe
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base >=4.7 && <5
+    , bytestring
     , haskell-module
+    , zeromq4-haskell
   default-language: Haskell2010
 
 test-suite haskell-module-test
@@ -58,5 +64,7 @@ test-suite haskell-module-test
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base >=4.7 && <5
+    , bytestring
     , haskell-module
+    , zeromq4-haskell
   default-language: Haskell2010
