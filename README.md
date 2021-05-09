@@ -23,3 +23,19 @@ stack run
 From the Rust program you will be able to select positions from 0-6 to place a marker.
 
 If a position is entered too fast or out of range, you will be prompted to enter again.
+
+Tests are implemented using doctests. 
+
+```shell
+stack test
+```
+
+
+Example run of program:
+
+Left: Haskell
+
+Right: Rust
+
+
+![img.png](project-demo.png)
