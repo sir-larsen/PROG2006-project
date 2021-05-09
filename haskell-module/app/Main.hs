@@ -2,8 +2,8 @@ module Main where
 
 import Data.Typeable
 import Io
-import Gamemain
+import Game
+import Board
 
 main :: IO ()
-main = do
-    gamemainf
+main = gameLoop (createBoard (6, 7))
