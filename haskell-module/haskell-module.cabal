@@ -30,6 +30,7 @@ library
       Io
       Game
       Board
+      Gamemain
   other-modules:
       Paths_haskell_module
   hs-source-dirs:
