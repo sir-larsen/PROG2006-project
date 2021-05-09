@@ -2,11 +2,12 @@
 
 module Io where
 
+import Control.Concurrent
 import Control.Monad
 import Data.String
 import System.IO
 import System.ZMQ4.Monadic
-import Data.ByteString.Char8 as CS
+import qualified Data.ByteString.Char8 as CS
 
 --someFunc :: IO ()
 --someFunc = putStrLn "someFunc"
@@ -41,3 +42,25 @@ getMove = runZMQ $ do
     let mv = receive sub
     let mv2 = CS.unpack <$> mv
     mv2
+
+sendBoard :: String -> IO ()
+sendBoard str = do
+    let addr = "tcp://*:5000"
+        name = ""
+    runZMQ $ do
+        pub <- socket Pub
+        bind pub addr
+        let board = CS.pack ("MS AS A STRING")
+        liftIO $ threadDelay 1000000
+        send pub [] (name <> board)
+
+publisher :: IO ()
+publisher = do
+    let addr = "tcp://*:5000"
+        name = ""
+    runZMQ $ do
+        pub <- socket Pub
+        bind pub addr
+        forever $ do
+            line <- liftIO $ fromString <$> getLine
+            send pub [] (name <> line)

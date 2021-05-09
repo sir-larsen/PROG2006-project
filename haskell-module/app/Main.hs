@@ -5,7 +5,7 @@ import Io
 
 main :: IO ()
 main = do
-    s <- getMove
+    {-|s <- getMove
     putStrLn ("type of s is: " ++ (show (typeOf s)))
     print s
     putStrLn s
@@ -19,4 +19,6 @@ main = do
     
     if x == "3" then putStrLn "HOI"
     else
-        putStrLn "NEY"
+        putStrLn "NEY"-}
+    sendBoard "| | | | | | |\n| | | | | | |\n"
+    publisher

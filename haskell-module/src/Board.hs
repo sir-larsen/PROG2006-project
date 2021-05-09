@@ -1,6 +1,6 @@
 module Board where
 
-import Data.List
+{-|import Data.List
 import Prelude hiding (getContents)
 
 -- Datatypes ---------------------------------------------------------------------------------------
@@ -35,8 +35,8 @@ playerToBoard x r c = (Con x (r,c))
 
 -- convert board to string
 --
-BoardToString:: Board -> String
-BoardToString b@(Con x (r,c)) = (joinRows b 1) ++ generateLines (c-1)
+--BoardToString :: Board -> String
+--BoardToString b@(Con x (r,c)) = (joinRows b 1) ++ generateLines (c-1)
 
 -- generates the trailing lines for the output
 generateLines :: Int -> String
@@ -62,4 +62,4 @@ separateCells (x:t) p = createOutput x p ++ separateCells t p
 joinRows :: Board -> Int -> String
 joinRows (Con x (r, c)) p | p >= (c-1) = "|" ++ seperateCells x p ++ "\n"
          | otherwise = joinRows (Con x (r, c)) (p+1) ++ "|"  ++ seperateCells x p ++ "\n"
-
+-}
