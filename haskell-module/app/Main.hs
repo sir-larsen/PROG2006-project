@@ -2,6 +2,7 @@ module Main where
 
 import Data.Typeable
 import Io
+import Gamemain
 
 main :: IO ()
 main = do
@@ -20,5 +21,6 @@ main = do
     if x == "3" then putStrLn "HOI"
     else
         putStrLn "NEY"-}
-    sendBoard "| | | | | | |\n| | | | | | |\n"
-    publisher
+    --sendBoard "| | | | | | |\n| | | | | | |\n"
+    --publisher
+    gamemainf

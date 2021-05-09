@@ -50,7 +50,9 @@ sendBoard str = do
     runZMQ $ do
         pub <- socket Pub
         bind pub addr
-        let board = CS.pack ("MS AS A STRING")
+        --let board = CS.pack ("MS AS A STRING")
+        --let board = CS.pack (str ++ "\n\nPlease enter move:\n")
+        let board = CS.pack (str)
         liftIO $ threadDelay 1000000
         send pub [] (name <> board)
 

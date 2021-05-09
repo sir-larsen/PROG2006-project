@@ -3,6 +3,7 @@ module Game where
 import Prelude hiding (getContents)
 import Board
 import Data.Typeable
+import Io
 
 -- Checks if a move is legal or not
 checkLegalMove :: Bool -> String
@@ -24,8 +25,19 @@ getInput player = do
                      putStr "\nPlease enter move for "
                      putStr (show player)
                      putStrLn ": "
-                     x<-getLine
+
+                     let a = ("\nPlease enter move for " ++ (show player) ++ " between 0-6")
+                     sendBoard(a)
+
+                     x <-getMove
+
+                     --x<-getLine
                      return (read x)
+
+--getInput2 :: Player -> IO Int
+--getInput2 player = do
+--                    let a = ("\nPlease enter move for " ++ (show player))
+--                    sendBoard(a)
 
 
 -- Cases for the program to end. Either a win or a draw
@@ -37,10 +49,18 @@ blackwins   =  "Black is the winner"
 
 -- Gameloop running continuously
 gameLoop :: Board -> IO ()
-gameLoop board | retrieveWinner board == 1 = putStrLn blackwins
-           | retrieveWinner board == 2 = putStrLn whitewins
-           | checkIfDraw board == True = putStrLn draw
+gameLoop board 
+           | retrieveWinner board == 1 = do
+             sendBoard blackwins
+             putStrLn blackwins
+           | retrieveWinner board == 2 = do
+             sendBoard whitewins
+             putStrLn whitewins
+           | checkIfDraw board == True = do
+             sendBoard "draw it is"
+             putStrLn draw
            | otherwise = do
+             --getInput2
              x <- getInput (playerTurn board)
              putStrLn ("type of s is: " ++ (show (typeOf x)))
              ok <- isValidMove board x
@@ -49,5 +69,6 @@ gameLoop board | retrieveWinner board == 1 = putStrLn blackwins
              temp <- putStrLn ("\n" ++ (boardToString board1))
              let a = boardToString board1
              print(a)
+             sendBoard a
              gameLoop board1
 
