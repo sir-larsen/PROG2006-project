@@ -2,7 +2,7 @@ fn gameloop() {
     //Subscriber
     let context_sub = zmq::Context::new();
     let subscriber = context_sub.socket(zmq::SUB).unwrap();
-    subscriber.connect("tcp://127.0.0.1:5000").unwrap();
+    subscriber.connect("tcp://127.0.0.1:5000").unwrap(); //Localhost
     subscriber.set_subscribe("".as_ref());
 
     //Publisher
