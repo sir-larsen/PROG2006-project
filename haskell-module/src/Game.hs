@@ -6,6 +6,12 @@ import Data.Typeable
 import Io
 
 -- | Checks if a move is legal or not
+-- >>> checkLegalMove True 
+-- ""
+--
+-- >>> checkLegalMove False
+-- "Illegal Move!\n"
+--
 checkLegalMove :: Bool -> String
 checkLegalMove True = ""
 checkLegalMove False = "Illegal Move!\n"
