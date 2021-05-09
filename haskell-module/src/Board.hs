@@ -63,3 +63,28 @@ joinRows :: Board -> Int -> String
 joinRows (Con x (r, c)) p | p >= (c-1) = "|" ++ seperateCells x p ++ "\n"
          | otherwise = joinRows (Con x (r, c)) (p+1) ++ "|"  ++ seperateCells x p ++ "\n"
 
+-- ---------------------------------------------------------------------------------------
+
+-- Game-logic
+
+checkIfWin:: Board -> Column -> Player -> Bool
+checkIfWin b c p | winner ( makeMove b c p ) == 1 = True
+        | winner ( makeMove b c p ) == 2 = True
+        | otherwise = False
+
+
+--checks for winning cases in a column
+--
+columnWin :: [Player] -> Player -> Bool
+columnWin [] p = False
+columnWin (x:y:z:q:t) p | x==y && x==z && x ==q && x == p = True
+        | otherwise = columnWin (y:z:q:t) p
+columnWin (x:t) p = False
+
+--checks for winning cases in a row
+--
+rowWin :: Board -> Player -> Bool
+rowWin (Con [] (r, c)) p = False
+rowWin (Con (x:t) (r, c)) p = (columnWin x p) || (rowWin  (Con t (r, c)) p)
+
+
