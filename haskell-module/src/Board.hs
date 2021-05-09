@@ -68,8 +68,8 @@ joinRows (Con x (r, c)) p | p >= (c-1) = "|" ++ separateCells x p ++ "\n"
 -- Game-logic
 -- Checks if the move results in a winning case
 checkIfWin:: Board -> Column -> Player -> Bool
-checkIfWin b c p | retrieveWinner ( makeMove b c p ) == 1 = True
-        | retrieveWinner ( makeMove b c p ) == 2 = True
+checkIfWin b c p | retrieveWinner ( move b c p ) == 1 = True
+        | retrieveWinner ( move b c p ) == 2 = True
         | otherwise = False
 
 
@@ -157,4 +157,31 @@ checkLeft x@(Con y (r,c)) p a b
 checkLeft2 :: Board -> Player -> Bool
 checkLeft2  x@(Con y (r, c))  p | c > 3 = checkLeft x p 3 0
            | otherwise = False
+
+-- Returns True if no winner is declared after board is full
+
+checkIfDraw:: Board -> Bool
+checkIfDraw (Con [] z) = True
+checkIfDraw (Con (x:xs) (r, c))
+      | length x == r && checkIfDraw (Con xs (r, c)) == True = True
+      | otherwise = False
+
+
+-- Returns True if the move is legal
+checkIfLegal:: Board -> Column -> Bool
+checkIfLegal (Con [] (r, c)) z = True
+checkIfLegal (Con x (r, c)) z | z >= c = False
+           | otherwise = (kk < r)
+              where
+                kk = length k
+                k  = (x !! z)
+
+
+-- Adds player to the board of if the move is legal
+move :: Board -> Column -> Player -> Board
+move y@(Con board (r, c)) column player = Con (a ++ b ++ c') (r, c)
+          where a  = (firstHalf board column)
+                b  = [((board !! column) ++ [player])]
+                c' = (secondHalf board column)
+
 
