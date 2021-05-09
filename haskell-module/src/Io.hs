@@ -28,7 +28,7 @@ sendBoard str = do
         pub <- socket Pub
         bind pub addr
         let board = CS.pack (str)
-        liftIO $ threadDelay 1000000 -- Have to use a 1 second delay such that the board gets rendered to rust
+        liftIO $ threadDelay 300000 -- Have to use a delay so that the enter lines wont get rendered before the board
         send pub [] (name <> board)
 
 -- | Publisher function from prog2006 git repo, used for testing and debug

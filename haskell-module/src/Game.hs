@@ -22,7 +22,7 @@ isValidMove b c = do
 -- | Takes a string from the user and parses it into Int
 getInput :: Player -> IO Int
 getInput player = do
-                     putStr "\nPlease enter move for "
+                     --putStr "\nPlease enter move for "
                      putStr (show player)
                      putStrLn ": "
 
@@ -54,13 +54,12 @@ gameLoop board
              sendBoard "draw it is"
              putStrLn draw
            | otherwise = do
-             --getInput2
              x <- getInput (playerTurn board)
              putStrLn ("type of s is: " ++ (show (typeOf x)))
              ok <- isValidMove board x
              let board1 | ok  = move board x (playerTurn board)
                         | otherwise = board
-             temp <- putStrLn ("\n" ++ (boardToString board1))
+             --temp <- putStrLn ("\n" ++ (boardToString board1))
              let a = boardToString board1
              print(a)
              sendBoard a
