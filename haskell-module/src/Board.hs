@@ -3,6 +3,7 @@ module Board where
 import Data.List
 import Prelude hiding (getContents)
 
+-- Datatypes ---------------------------------------------------------------------------------------
 type Column = Int
 type Row    = Int
 
