@@ -18,7 +18,7 @@ checkLegalMove True = ""
 checkLegalMove False = "Illegal Move!\n"
 
 
--- Returns True if the move is valid
+-- | Returns True if the move is valid
 isValidMove :: Board -> Column -> IO Bool
 isValidMove b c = do
                 let x = checkIfLegal b c
