@@ -1,7 +1,7 @@
 module Board where
 
 import Data.List
-import Prelude hiding (getContents)
+import Prelude hiding (interfacingFunction)
 
 -- Datatypes ---------------------------------------------------------------------------------------
 type Column = Int
@@ -158,7 +158,7 @@ checkLeft2 :: Board -> Player -> Bool
 checkLeft2  x@(Con y (r, c))  p | c > 3 = checkLeft x p 3 0
            | otherwise = False
 
--- Returns True if no winner is declared after board is full
+-- ReplayerTurns True if no winner is declared after board is full
 
 checkIfDraw:: Board -> Bool
 checkIfDraw (Con [] z) = True
@@ -167,7 +167,7 @@ checkIfDraw (Con (x:xs) (r, c))
       | otherwise = False
 
 
--- Returns True if the move is legal
+-- ReplayerTurns True if the move is legal
 checkIfLegal:: Board -> Column -> Bool
 checkIfLegal (Con [] (r, c)) z = True
 checkIfLegal (Con x (r, c)) z | z >= c = False
@@ -180,8 +180,42 @@ checkIfLegal (Con x (r, c)) z | z >= c = False
 -- Adds player to the board of if the move is legal
 move :: Board -> Column -> Player -> Board
 move y@(Con board (r, c)) column player = Con (a ++ b ++ c') (r, c)
-          where a  = (firstHalf board column)
+          where a  = (split1 board column)
                 b  = [((board !! column) ++ [player])]
-                c' = (secondHalf board column)
+                c' = (split2 board column)
 
+
+
+--The first half of the board. Helper function for move
+split1:: [[Player]] -> Int -> [[Player]]
+split1 board c = take c board
+
+
+--The second half of the board. Helper function for move
+split2:: [[Player]] -> Int -> [[Player]]
+split2 board c = drop (c + 1) board
+
+
+--Function necessary for our prelude.
+interfacingFunction :: Board -> [[Player]]
+interfacingFunction (Con [] z) = []
+interfacingFunction (Con (x:xs) z) | null x == True = []: interfacingFunction (Con xs z)
+         | null x == False = [last x]: interfacingFunction (Con xs z)
+
+-- creates rows within createboard
+createRow :: Board -> Row
+createRow (Con _ (r, _)) = r
+
+-- creates columns within createBoard
+createColumn :: Board -> Column
+createColumn (Con _ (_, c)) = c
+
+--returns the player whos turn it is
+playerTurn :: Board -> Player
+playerTurn (Con x (r, c))  | rc > yc = White
+         | otherwise = Black
+           where
+      rc = length (filter (==Black) u1)
+      yc = length (filter (==White) u1)
+      u1 = concat x
 
