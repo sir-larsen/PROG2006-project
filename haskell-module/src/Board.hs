@@ -16,24 +16,51 @@ data Board  = Con [[Player]] (Row, Column)
 
 -- Functions exclusively for the board ----------------------------------------------------------------
 
--- creates new board
+-- | creates new board
+-- >>> createBoard (6, 7)
+-- Con [[],[],[],[],[],[],[]] (6,7)
+--
+-- >>> createBoard (6, 3)
+-- Con [[],[],[]] (6,3)
+--
 createBoard:: (Row, Column) -> Board
 createBoard (r, c) = Con (replicate c []) (r, c)
 
--- tranposes the board
+-- | tranposes the board
+-- >>> transposer (Con [[],[],[],[],[],[],[]] (6,7))
+-- Con [] (6,7)
+--
+-- >>> transposer (Con [[],[],[],[],[],[],[]] (6,3))
+-- Con [] (6,3)
+--
 transposer :: Board -> Board
 transposer y@(Con x (r,c)) = playerToBoard ( transpose ( boardToPlayer y)) r c
 
--- generates array of players from board
+-- | generates array of players from board
+-- >>> boardToPlayer (Con [[],[],[],[],[],[],[]] (6,3))
+-- [[],[],[],[],[],[],[]]
+--
+-- >>> boardToPlayer (Con [[],[],[],[],[]] (4,3))
+-- [[],[],[],[],[]]
+--
 boardToPlayer :: Board -> [[Player]]
 boardToPlayer (Con x (r, c)) = x
 
--- generates board from array of players
+
+-- | generates board from array of players
+-- >>> playerToBoard ([[],[],[],[],[]]) 6 3 
+-- Con [[],[],[],[],[]] (6,3)
+--
+-- >>> playerToBoard ([[],[],[],[]]) 6 7 
+-- Con [[],[],[],[]] (6,7)
+--
 playerToBoard :: [[Player]] -> Row -> Column -> Board
 playerToBoard x r c = (Con x (r,c))
 
 
--- convert board to string
+-- | convert board to string
+-- >>> boardToString (Con [[],[],[],[],[]] (4,3)) 
+-- "| | | | | |\n| | | | | |\n+-+-+-+\n 0 1 2"
 --
 boardToString:: Board -> String
 boardToString b@(Con x (r,c)) = (joinRows b 1) ++ generateLines (c-1)
@@ -51,7 +78,7 @@ generateLines a | a == -1 = "+\n"
     | otherwise = "+-" ++ generateLines (a-1) ++ " " ++ (show a)
 
 
---creates output for each cell
+-- | creates output for each cell
 createOutput :: [Player] -> Int -> String
 createOutput [] p = " |"
 createOutput x 1 | head x ==Black = "#|"
@@ -60,12 +87,21 @@ createOutput x 1 | head x ==Black = "#|"
 createOutput x p | p > (length x) = " |"
   | otherwise = (createOutput (tail x) (p-1))
 
---seperated the cells of one row
+-- | seperated the cells of one row
+-- >>> separateCells [[],[],[],[]] 1 
+-- " | | | |"
+--
+-- >>> separateCells [[],[],[],[],[]] 2 
+-- " | | | | |"
+--
 separateCells :: [[Player]] -> Int -> String
 separateCells [x] p = createOutput x p
 separateCells (x:t) p = createOutput x p ++ separateCells t p
 
--- joins the rows together, original table is created from columns !
+-- | joins the rows together, original table is created from columns !
+-- >>> joinRows (Con [[],[],[],[],[]] (4,3)) 2 
+-- "| | | | | |\n"
+--
 joinRows :: Board -> Int -> String
 joinRows (Con x (r, c)) p | p >= (c-1) = "|" ++ separateCells x p ++ "\n"
          | otherwise = joinRows (Con x (r, c)) (p+1) ++ "|"  ++ separateCells x p ++ "\n"
