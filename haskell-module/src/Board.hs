@@ -66,11 +66,25 @@ joinRows (Con x (r, c)) p | p >= (c-1) = "|" ++ separateCells x p ++ "\n"
 -- ---------------------------------------------------------------------------------------
 
 -- Game-logic
-
+-- Checks if the move results in a winning case
 checkIfWin:: Board -> Column -> Player -> Bool
-checkIfWin b c p | winner ( makeMove b c p ) == 1 = True
-        | winner ( makeMove b c p ) == 2 = True
+checkIfWin b c p | retrieveWinner ( makeMove b c p ) == 1 = True
+        | retrieveWinner ( makeMove b c p ) == 2 = True
         | otherwise = False
+
+
+
+-- Utilizes the transposer to check winning cases both diagonally and through rows and columns
+checkIfWin2 :: Board -> Player -> Bool
+checkIfWin2 x p = (checkLeft2 x p) || (checkRight2 x p) || (rowWin x p) || (rowWin (transposer x) p)
+
+
+--Retrieves the winner if there is one
+retrieveWinner :: Board -> Int
+retrieveWinner x | checkIfWin2 x Black = 1
+   | checkIfWin2 x White = 2
+   | otherwise = 0
+
 
 
 --checks for winning cases in a column
@@ -102,4 +116,45 @@ getPlayer  (Con x (r, c)) a b p | b < length le = le !! b
             | otherwise = p
             where le | a < length x = x!!a
                             | otherwise = []
+
+--Finds winning cases for right diagonals
+--
+checkRightWins :: Board -> Player -> Int -> Int -> Bool
+checkRightWins x p a b = q1 ==  q2 && q1 == q3 && q1 == q4 && q1 == p
+      where
+   p1 = generateEmptySpaces p
+   q1 = getPlayer x a b p1
+   q2 = getPlayer x (a+1) (b+1) p1
+   q3 = getPlayer x (a+2) (b+2) p1
+   q4 = getPlayer x (a+3) (b+3) p1
+
+checkRight :: Board -> Player -> Int -> Int -> Bool
+checkRight x@(Con y (r, c)) p a b | a>c-4 && b > r - 5 = False
+              | a>c-4 = checkRight x p 0 (b+1)
+              | otherwise = checkRightWins x p a b || checkRight x p (a+1) b
+
+checkRight2 :: Board -> Player -> Bool
+checkRight2  x p = checkRight  x p 0 0
+
+
+--Finds winning cases for left diagonals
+--
+checkLeftWins :: Board -> Player -> Int -> Int -> Bool
+checkLeftWins x p a b = q1 ==  q2 && q1 == q3 && q1 == q4 && q1 == p
+      where
+   p1 = generateEmptySpaces p
+   q1 = getPlayer x a b p1
+   q2 = getPlayer x (a-1) (b+1) p1
+   q3 = getPlayer x (a-2) (b+2) p1
+   q4 = getPlayer x (a-3) (b+3) p1
+
+checkLeft :: Board -> Player -> Int -> Int -> Bool
+checkLeft x@(Con y (r,c)) p a b
+            | a >= c && b < (r-4) = checkLeft x p 3 (b+1)
+            | a >= c && b >= (r-4) = False
+            | otherwise = checkLeftWins x p a b || checkLeft x p (a+1) b
+
+checkLeft2 :: Board -> Player -> Bool
+checkLeft2  x@(Con y (r, c))  p | c > 3 = checkLeft x p 3 0
+           | otherwise = False
 
