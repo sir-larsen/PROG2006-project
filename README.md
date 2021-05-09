@@ -1,20 +1,20 @@
 ## Authors: Alexander Eckhoff Larsen & Sander Fuhr
 
 ### Gameplay and mechanics
-The game is a 4 in a row/connect 4 type game where the aim is to connect four markers either vertically, horizontally or diagonally. The two players takes turns at placing their markers on the board
+The game is a 4 in a row/connect 4 type game where the aim is to connect four markers either vertically, horizontally or diagonally. The two players take turns at placing their markers on the board
 
 ### Implementation
 The game is implemented in Haskell, using a rust program as an interface between the two programs through ZMQ. 
 The Haskell implementation is inspired and based upon Maysam Torabi's opensource project: https://github.com/maysam/connect-four-haskell
 
 ## Building / Running
-This game consists of a Rust and Haskell program which both needs to be running. First start the Rust program by cd-ing to the root of rust-module and then do as described below
+This game consists of a Rust and Haskell program which both needs to be running. First start the Rust program by cd-ing to the root of the rust-module and then do as described below
 
 ```shell
 cargo run
 ```
 
-Then cd to the root of the Haskell module and do stack run from there
+Then cd to the root of the Haskell module and do 'stack run' from there
 
 ```shell
 stack run
