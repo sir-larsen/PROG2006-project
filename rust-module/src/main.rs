@@ -30,22 +30,21 @@ fn gameloop() {
     let stdin = std::io::stdin();
 
     loop {
-        let mut msg = zmq::Message::new();
+        let mut msg = zmq::Message::new(); //Message that is to be received
         subscriber.recv(&mut msg, 0).unwrap();
-        println!("{}", msg.as_str().unwrap());
+        println!("{}", msg.as_str().unwrap()); //Printing the received message
 
-        let words:Vec<&str>= msg.as_str().unwrap().split(' ').collect();
-        if words[0].contains("Please") {
-            println!("COCK");
+        let words:Vec<&str>= msg.as_str().unwrap().split(' ').collect(); //Splitting the message into tokens
+        if words[0].contains("Please") { //If so, then go to input
 
-            let mut line = String::new();
+            let mut line = String::new(); 
             stdin.read_line(&mut line).unwrap();
             publisher.send(&line, 0).unwrap();
         }
-        if words[3].contains("winner") {
+        if words[3].contains("winner") { //If winner, quit game
             println!("WINNER, GAME OVER NOW");
         }
-        if words[0].contains("draw") {
+        if words[0].contains("draw") { //If draw, quit game also
             println!("DRAW GAME OVAH");
         }
         //print!("{}", words[0]);

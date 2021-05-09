@@ -5,13 +5,13 @@ import Board
 import Data.Typeable
 import Io
 
--- Checks if a move is legal or not
+-- | Checks if a move is legal or not
 checkLegalMove :: Bool -> String
 checkLegalMove True = ""
 checkLegalMove False = "Illegal Move!\n"
 
 
--- Returns True if the move is valid
+-- | Returns True if the move is valid
 isValidMove :: Board -> Column -> IO Bool
 isValidMove b c = do
                 let x = checkIfLegal b c
@@ -19,7 +19,7 @@ isValidMove b c = do
                 return (x)
 
 
--- Takes a string from the user and parses it into Int
+-- | Takes a string from the user and parses it into Int
 getInput :: Player -> IO Int
 getInput player = do
                      putStr "\nPlease enter move for "
@@ -34,20 +34,14 @@ getInput player = do
                      --x<-getLine
                      return (read x)
 
---getInput2 :: Player -> IO Int
---getInput2 player = do
---                    let a = ("\nPlease enter move for " ++ (show player))
---                    sendBoard(a)
-
-
--- Cases for the program to end. Either a win or a draw
+-- | Cases for the program to end. Either a win or a draw
 draw        =  "Its a draw!"
 whitewins    = "White is the winner!"
 blackwins   =  "Black is the winner"
 
 
 
--- Gameloop running continuously
+-- | Gameloop running continuously
 gameLoop :: Board -> IO ()
 gameLoop board 
            | retrieveWinner board == 1 = do
