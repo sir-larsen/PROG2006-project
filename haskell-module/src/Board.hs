@@ -35,8 +35,8 @@ playerToBoard x r c = (Con x (r,c))
 
 -- convert board to string
 --
-BoardToString:: Board -> String
-BoardToString b@(Con x (r,c)) = (joinRows b 1) ++ generateLines (c-1)
+boardToString:: Board -> String
+boardToString b@(Con x (r,c)) = (joinRows b 1) ++ generateLines (c-1)
 
 -- generates the trailing lines for the output
 generateLines :: Int -> String
@@ -60,8 +60,8 @@ separateCells (x:t) p = createOutput x p ++ separateCells t p
 
 -- joins the rows together, original table is created from columns !
 joinRows :: Board -> Int -> String
-joinRows (Con x (r, c)) p | p >= (c-1) = "|" ++ seperateCells x p ++ "\n"
-         | otherwise = joinRows (Con x (r, c)) (p+1) ++ "|"  ++ seperateCells x p ++ "\n"
+joinRows (Con x (r, c)) p | p >= (c-1) = "|" ++ separateCells x p ++ "\n"
+         | otherwise = joinRows (Con x (r, c)) (p+1) ++ "|"  ++ separateCells x p ++ "\n"
 
 -- ---------------------------------------------------------------------------------------
 
@@ -87,4 +87,19 @@ rowWin :: Board -> Player -> Bool
 rowWin (Con [] (r, c)) p = False
 rowWin (Con (x:t) (r, c)) p = (columnWin x p) || (rowWin  (Con t (r, c)) p)
 
+
+-- Generate empty spaces for the other side
+--
+generateEmptySpaces :: Player -> Player
+generateEmptySpaces p | p == Black = White
+      | p == White = Black
+
+
+--Gets the player-marker of position ( column , row)
+--
+getPlayer :: Board -> Int -> Int ->  Player ->  Player
+getPlayer  (Con x (r, c)) a b p | b < length le = le !! b
+            | otherwise = p
+            where le | a < length x = x!!a
+                            | otherwise = []
 
