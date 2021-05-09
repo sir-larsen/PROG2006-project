@@ -1,3 +1,5 @@
+use std::process;
+
 fn gameloop() {
     //Subscriber
     let context_sub = zmq::Context::new();
@@ -24,10 +26,10 @@ fn gameloop() {
             publisher.send(&line, 0).unwrap();
         }
         if words[3].contains("winner") { //If winner, quit game
-            println!("WINNER, GAME OVER NOW");
+            process::exit(0); //Exit the program if win is detected
         }
         if words[0].contains("draw") { //If draw, quit game also
-            println!("DRAW GAME OVAH");
+            process::exit(1); //Exit the program if a draw is detected
         }
     }
 }
