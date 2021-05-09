@@ -4,7 +4,15 @@ import Prelude hiding (getContents)
 import Board
 import Data.Typeable
 
--- Checks if a move is legal or not
+
+
+-- | Checks if a move is legal or not
+-- >>> checkLegalMove True 
+-- ""
+--
+-- >>> checkLegalMove False
+-- "Illegal Move!\n"
+--
 checkLegalMove :: Bool -> String
 checkLegalMove True = ""
 checkLegalMove False = "Illegal Move!\n"

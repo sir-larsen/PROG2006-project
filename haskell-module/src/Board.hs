@@ -38,7 +38,14 @@ playerToBoard x r c = (Con x (r,c))
 boardToString:: Board -> String
 boardToString b@(Con x (r,c)) = (joinRows b 1) ++ generateLines (c-1)
 
--- generates the trailing lines for the output
+
+-- | generates the trailing lines for the output
+-- >>> generateLines 1 
+-- "+-+-+\n 0 1"
+--
+-- >>> generateLines 0
+-- "+-+\n 0"
+--
 generateLines :: Int -> String
 generateLines a | a == -1 = "+\n"
     | otherwise = "+-" ++ generateLines (a-1) ++ " " ++ (show a)
