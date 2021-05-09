@@ -30,8 +30,6 @@ fn gameloop() {
             println!("DRAW GAME OVAH");
         }
     }
-
-    
 }
 
 fn main() {
