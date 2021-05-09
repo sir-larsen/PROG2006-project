@@ -1,6 +1,6 @@
 module Board where
 
-{-|import Data.List
+import Data.List
 import Prelude hiding (getContents)
 
 -- Datatypes ---------------------------------------------------------------------------------------
@@ -62,4 +62,3 @@ separateCells (x:t) p = createOutput x p ++ separateCells t p
 joinRows :: Board -> Int -> String
 joinRows (Con x (r, c)) p | p >= (c-1) = "|" ++ seperateCells x p ++ "\n"
          | otherwise = joinRows (Con x (r, c)) (p+1) ++ "|"  ++ seperateCells x p ++ "\n"
--}
