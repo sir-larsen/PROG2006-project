@@ -14,7 +14,7 @@ getMove :: IO String
 getMove = runZMQ $ do
     sub <- socket Sub
     subscribe sub ""
-    connect sub "tcp://127.0.0.1:5555"
+    connect sub "tcp://127.0.0.1:5555" --Localhost
     let mv = receive sub
     let mv2 = CS.unpack <$> mv
     mv2
